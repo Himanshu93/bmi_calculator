@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const double bottomContainerHeight = 80;
+const Color reuseableContainerColor = Color(0xFF14171B);
+const Color bottomContainerColor = Color(0xFF0080ff);
+
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
@@ -16,47 +20,57 @@ class _InputPageState extends State<InputPage> {
       ),
       body: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: ReusableCard(),
-              ),
-              Expanded(
-                child: ReusableCard(),
-              ),
-            ],
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: ReusableCard(colour: reuseableContainerColor),
+                ),
+                Expanded(
+                  child: ReusableCard(colour: reuseableContainerColor),
+                ),
+              ],
+            ),
           ),
-          Expanded(child: ReusableCard()),
-          Row(
-            children: [
-              Expanded(
-                child: ReusableCard(),
-              ),
-              Expanded(
-                child: ReusableCard(),
-              ),
-            ],
+          Expanded(child: ReusableCard(colour: reuseableContainerColor)),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: ReusableCard(colour: reuseableContainerColor),
+                ),
+                Expanded(
+                  child: ReusableCard(colour: reuseableContainerColor),
+                ),
+              ],
+            ),
           ),
+          Container(
+            color: bottomContainerColor,
+            margin: EdgeInsets.only(top: 10),
+            height: bottomContainerHeight,
+            width: double.infinity,
+          )
         ],
       ),
     );
   }
 }
 
-class ReusableCard extends StatefulWidget {
-  @override
-  _ReusableCardState createState() => _ReusableCardState();
-}
+class ReusableCard extends StatelessWidget {
+  final Color colour;
+  final Widget cardChild;
 
-class _ReusableCardState extends State<ReusableCard> {
+  ReusableCard({@required this.colour, this.cardChild});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      child: cardChild,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Color(0xFF14171B),
+        color: this.colour,
       ),
     );
   }
