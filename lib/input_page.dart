@@ -5,8 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 
 const double bottomContainerHeight = 80;
-const Color reuseableContainerColor = Color(0xFF14171B);
+const Color inactiveCardColor = Color(0xFF14171B);
+const Color activeCardColor = Color(0xFF212121);
 const Color bottomContainerColor = Color(0xFF0080ff);
+
+enum Gender {
+  male,
+  female
+}
 
 class InputPage extends StatefulWidget {
   @override
@@ -14,6 +20,9 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  
+  Gender genderSelector;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,29 +37,43 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(
-                    colour: reuseableContainerColor,
-                    cardChild: IconContent('MALE', FontAwesomeIcons.mars ),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        genderSelector = Gender.male;
+                      });
+                    },
+                    child: ReusableCard(
+                      colour: genderSelector == Gender.male ? activeCardColor : inactiveCardColor,
+                      cardChild: IconContent('MALE', FontAwesomeIcons.mars),
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(
-                    colour: reuseableContainerColor,
-                    cardChild: IconContent('FEMALE', FontAwesomeIcons.venus ),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        genderSelector = Gender.female;
+                      });
+                    },
+                    child: ReusableCard(
+                      colour: genderSelector == Gender.female ? activeCardColor : inactiveCardColor,
+                      cardChild: IconContent('FEMALE', FontAwesomeIcons.venus),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Expanded(child: ReusableCard(colour: reuseableContainerColor)),
+          Expanded(child: ReusableCard(colour: inactiveCardColor)),
           Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(colour: reuseableContainerColor),
+                  child: ReusableCard(colour: inactiveCardColor),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: reuseableContainerColor),
+                  child: ReusableCard(colour: inactiveCardColor),
                 ),
               ],
             ),
@@ -66,6 +89,3 @@ class _InputPageState extends State<InputPage> {
     );
   }
 }
-
-
-
