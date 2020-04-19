@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:bmi_calculator/components/bottom_button.dart';
 
 class ResultPage extends StatelessWidget {
-  final int bmi = 20;
+  final String bmiResult;
+  final String resultText;
+  final String interpretation;
+
+  ResultPage({ this.bmiResult,  this.resultText,  this.interpretation});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class ResultPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Your Results',
+            resultText,
             style: kBottomContainerTextStyle,
           ),
           Expanded(
@@ -28,18 +32,18 @@ class ResultPage extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      'NORMAL',
+                      resultText,
                       style: kLabelTextStyle,
                     ),
                   ),
                   Center(
                     child: Text(
-                      bmi.toString(),
+                      bmiResult,
                       style: kNumberTextStyle,
                     ),
                   ),
                   Text(
-                    'Hello hello hello',
+                    interpretation,
                     style: kBodyTextStyle,
                     textAlign: TextAlign.center,
                   ),
