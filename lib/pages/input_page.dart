@@ -1,12 +1,13 @@
+import 'package:bmi_calculator/components/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:bmi_calculator/reusable_card.dart';
-import 'constants.dart';
-import 'icon_content.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
+import 'package:bmi_calculator/constants.dart';
+import 'package:bmi_calculator/components/icon_content.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
 
 enum Gender { male, female }
-enum CalcType { plus, minus }
 
 class InputPage extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _InputPageState extends State<InputPage> {
   Gender genderSelector;
   int height = 180;
   int weight = 60;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -125,22 +127,22 @@ class _InputPageState extends State<InputPage> {
                           children: [
                             RoundIconButton(
                               childIconData: FontAwesomeIcons.minus,
-                              calcWeight: (){
+                              onPressed: () {
                                 setState(() {
                                   this.weight--;
                                 });
-                              } ,  
+                              },
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             RoundIconButton(
                               childIconData: FontAwesomeIcons.plus,
-                              calcWeight: (){
+                              onPressed: () {
                                 setState(() {
                                   this.weight++;
                                 });
-                              } ,
+                              },
                             ),
                           ],
                         ),
@@ -149,38 +151,58 @@ class _InputPageState extends State<InputPage> {
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: kInactiveCardColor),
+                  child: ReusableCard(
+                    colour: kInactiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'AGE',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              childIconData: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  this.age--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            RoundIconButton(
+                              childIconData: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                setState(() {
+                                  this.age++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: kBottomContainerColor,
-            margin: EdgeInsets.only(top: 10),
-            height: kBottomContainerHeight,
-            width: double.infinity,
+          BottomButton(
+            buttonTitle: 'CALCULATE',
+            onTap: () {
+              Navigator.pushNamed(context, '/result');
+            },
           )
         ],
       ),
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  final IconData childIconData;
-  final Function calcWeight;
-
-  RoundIconButton({this.childIconData, this.calcWeight});
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: this.calcWeight,
-      child: Icon(this.childIconData),
-      elevation: 6.0,
-      shape: CircleBorder(),
-      fillColor: kMaterialButtonColor,
-      constraints: BoxConstraints.tightFor(width: 50.0, height: 50.0),
     );
   }
 }
